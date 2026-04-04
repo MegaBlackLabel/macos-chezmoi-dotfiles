@@ -13,7 +13,6 @@ ctop = "latest"
 deno = "latest"
 fastfetch = "latest"
 fzf = "latest"
-"github:anomalyco/opencode" = "latest"
 "github:trasta298/keifu" = "latest"
 go = "latest"
 helix = "latest"
@@ -49,38 +48,39 @@ java = "latest"
 "npm:opencode-ai" = "latest"
 
 [tasks.sync-dotfiles]
-shell = "bash"
+description = "Sync dotfiles using chezmoi"
 run = '''
-set -e
-
-# Get diff
-before="$(chezmoi diff)"
-
-if [ -z "$before" ]; then
-  echo "No changes in HOME. Skip re-add/commit/push."
-  exit 0
+# 差分があるかチェック (フラグを使わず標準出力の有無で判定)
+DIFF_OUT=$(chezmoi diff)
+if [ -z "$DIFF_OUT" ]; then
+    echo "No changes in HOME. Skip re-add/commit/push."
+    exit 0
 fi
 
-echo "$before"
+echo "Checking changes..."
+chezmoi status
 
-# re-add
-chezmoi managed | while read -r f; do
-  path="$HOME/$f"
-  if [ ! -d "$path" ]; then
-    chezmoi re-add "$path"
-  fi
+# ファイルのみを再追加
+# -f で実在確認し、ディレクトリを除外
+chezmoi managed --include files | while read -r file; do
+    if [ -f "$HOME/$file" ]; then
+        chezmoi re-add "$HOME/$file"
+    fi
 done
 
-# show diff
-git -C "$HOME/.local/share/chezmoi" diff
+# sourceディレクトリへ移動
+SOURCE_DIR=$(chezmoi source-path)
+cd "$SOURCE_DIR"
 
-if git -C "$HOME/.local/share/chezmoi" diff --quiet; then
-  echo "No changes to source state. Skip commit/push."
-  exit 0
+# Gitの差分チェック
+if git diff --quiet; then
+    echo "No changes to source state. Skip commit/push."
+    exit 0
 fi
 
-cd "$HOME/.local/share/chezmoi"
+# コミットとプッシュ
+git diff --stat
 git add .
-git commit -m "Sync"
+git commit -m "Sync (from Mac)"
 git push
 '''
