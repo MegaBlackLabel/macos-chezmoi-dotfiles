@@ -1,0 +1,86 @@
+[tools]
+bun = "latest"
+chezmoi = "latest"
+
+claude = { 
+  version = "latest",
+  bin = "claude",
+  url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/{{ version }}/darwin-{{ arch() }}/claude",
+  version_list_url = "https://storage.googleapis.com/claude-code-dist-86c565f3-f756-42ad-8dfa-d59b1c096819/claude-code-releases/latest"
+}
+
+ctop = "latest"
+deno = "latest"
+fastfetch = "latest"
+fzf = "latest"
+"github:anomalyco/opencode" = "latest"
+"github:trasta298/keifu" = "latest"
+go = "latest"
+helix = "latest"
+jq = "latest"
+just = "latest"
+lazygit = "latest"
+neovim = "latest"
+node = "latest"
+"npm:@github/copilot" = "1.0.10"
+"npm:@openai/codex" = "latest"
+"npm:typescript-language-server" = "latest"
+pnpm = "latest"
+python = "3.13"
+rg = "latest"
+rust = "latest"
+uv = "latest"
+wrangler = "latest"
+yazi = "latest"
+zig = "latest"
+zls = "latest"
+zoxide = "latest"
+"npm:typescript" = "latest"
+"npm:vscode-html-languageserver-bin" = "latest"
+atuin = "latest"
+bat = "latest"
+codex = "latest"
+java = "latest"
+"github:zellij-org/zellij" = "latest"
+"npm:skills" = "latest"
+"npm:oh-my-opencode" = "latest"
+"npm:@opencode-ai/plugin" = "latest"
+"npm:@code-yeongyu/comment-checker" = "latest"
+"npm:opencode-ai" = "latest"
+
+[tasks.sync-dotfiles]
+shell = "bash"
+run = '''
+set -e
+
+# Get diff
+before="$(chezmoi diff)"
+
+if [ -z "$before" ]; then
+  echo "No changes in HOME. Skip re-add/commit/push."
+  exit 0
+fi
+
+echo "$before"
+
+# re-add
+chezmoi managed | while read -r f; do
+  path="$HOME/$f"
+  if [ ! -d "$path" ]; then
+    chezmoi re-add "$path"
+  fi
+done
+
+# show diff
+git -C "$HOME/.local/share/chezmoi" diff
+
+if git -C "$HOME/.local/share/chezmoi" diff --quiet; then
+  echo "No changes to source state. Skip commit/push."
+  exit 0
+fi
+
+cd "$HOME/.local/share/chezmoi"
+git add .
+git commit -m "Sync"
+git push
+'''
