@@ -1,1 +1,3 @@
 # macos-chezmoi-dotfiles
+
+init
