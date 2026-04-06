@@ -1,0 +1,28 @@
+###############################################
+#  Launch Ghostty (optional)
+###############################################
+
+# Finder (File)
+cmd + alt - f : open -a "Finder"
+
+# Ghostty (Terminal)
+cmd + alt - g : open -a "Ghostty"
+
+# Microsoft Edge
+cmd + alt - e : open -a "Microsoft Edge"
+
+# Visual Studio Code (Code)
+cmd + alt - c : open -a "Visual Studio Code"
+
+# Obsidian
+cmd + alt - o : open -a "Obsidian"
+
+# CMUX (Command/App)
+# パスを直接指定
+cmd + alt - t : open -a "/Applications/cmux.app"
+
+# Obsidian
+cmd + alt - s : open -a "Slack"
+
+# Obsidian
+cmd + alt - d : open -a "Discord"
