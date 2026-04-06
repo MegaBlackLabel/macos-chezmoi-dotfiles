@@ -84,3 +84,6 @@ git add .
 git commit -m "Sync (from Mac)"
 git push
 '''
+
+[tasks.niri]
+run = "~/.config/yabai/niri-mode.sh {{args}}"

@@ -1,0 +1,126 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+
+  "plugin": [
+    "oh-my-openagent@latest"
+  ],
+
+  "permission": {
+
+    "read": {
+      "**/.env": "deny",
+      "**/.env.*": "deny",
+      "**/.env.example": "allow",
+
+      "**/.npmrc": "deny",
+      "**/.git-credentials": "deny",
+      "**/.git/config": "deny",
+
+      "**/.ssh/**": "deny",
+      "/Users/**/.ssh/**": "deny",
+
+      "/Users/**/Documents/**": "deny",
+      "/Users/**/Desktop/**": "deny",
+      "/Users/**/Downloads/**": "deny",
+      "/Users/**/Pictures/**": "deny",
+      "/Users/**/Videos/**": "deny",
+      "/Users/**/Music/**": "deny",
+
+      "**/.git/**": "allow",
+
+      "/Users/**/.openagent/**": "allow",
+
+      "/tmp/**": "allow",
+
+      "/Users/**/Applications/**": "allow",
+      "/Users/**/Library/**/bun/**": "allow",
+      "/Users/**/Library/**/npm/**": "allow",
+      "/Users/**/Library/**/node/**": "allow",
+
+      "*": "allow"
+    },
+
+    "edit": {
+      "**/.env": "deny",
+      "**/.env.*": "deny",
+
+      "**/.git/**": "deny",
+      "**/.vscode/**": "deny",
+
+      "**/node_modules/**": "deny",
+      "**/dist/**": "deny",
+      "**/build/**": "deny",
+
+      "**/package-lock.json": "deny",
+      "**/pnpm-lock.yaml": "deny",
+      "**/bun.lockb": "deny",
+
+      "/Users/**/.openagent/**": "allow",
+
+      "/tmp/**": "allow",
+
+      "*": "deny",
+      "/Users/megablacklabel/develop/**": "allow",
+      "/Users/megablacklabel/develop/.ai-tmp/**": "allow",
+      "/Users/megablacklabel/develop/.plugin-sandbox/**": "allow"
+    },
+
+    "bash": {
+      "*": "ask",
+
+      "cd /Users/megablacklabel/develop*": "allow",
+
+      "git clone *": "allow",
+      "git pull *": "allow",
+      "git fetch *": "allow",
+      "git status": "allow",
+      "git branch *": "allow",
+      "git checkout *": "allow",
+      "git switch *": "allow",
+      "git add *": "allow",
+      "git commit *": "allow",
+      "git push": "allow",
+      "git log *": "allow",
+
+      "git push --force": "deny",
+      "git reset --hard": "deny",
+
+      "gh repo *": "allow",
+      "gh pr *": "allow",
+      "gh issue *": "allow",
+      "gh workflow *": "allow",
+      "gh run *": "allow",
+      "gh release *": "allow",
+
+      "gh auth *": "deny",
+      "gh secret *": "deny",
+
+      "openagent *": "allow",
+      "openagent plugin install *": "allow",
+      "openagent plugin remove *": "allow",
+      "openagent plugin list": "allow",
+      "openagent plugin update": "allow",
+      "openagent run *": "allow",
+      "openagent doctor": "allow",
+      "openagent update": "allow",
+
+      "oh-my-opencode *": "allow",
+
+      "bun install": "allow",
+      "bun add *": "allow",
+      "bun remove *": "allow",
+      "bun run *": "allow",
+      "bun test": "allow",
+
+      "bunx *": "allow",
+
+      "node *": "allow",
+
+      "ls": "allow",
+      "pwd": "allow",
+      "echo *": "allow",
+
+      "rm *": "deny"
+    }
+  }
+}
