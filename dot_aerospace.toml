@@ -270,3 +270,7 @@ run = 'move-node-to-workspace D'
 if.app-id = 'com.tinyspeck.slackmacgap'
 run = 'move-node-to-workspace S'
 
+[[on-window-detected]]
+if.app-id = 'com.microsoft.copilot-mac'
+run = 'move-node-to-workspace 2'
+
